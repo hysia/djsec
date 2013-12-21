@@ -13,6 +13,9 @@ https://github.com/hysia/djsec/
 """
 
 import os
+from settings import INSTALLED_APPS
+from settings import MIDDLEWARE_CLASSES
+
 
 DEBUG = True
 
@@ -28,6 +31,12 @@ DATABASE_DIR = os.path.join(BASE_DIR, 'database')
 
 # 邮箱（默认、报错、管理员 发信邮箱）
 EMAIL = ''
+
+# 主题
+THEME = 'bootstrap3'
+
+# 分页大小
+PER_PAGE = 10
 
 # 时区
 TIME_ZONE = 'Asia/Shanghai'
@@ -52,6 +61,26 @@ DATABASES = {
 
 #--- 以下配置不要改动 ---#
 
+INSTALLED_APPS += (
+    'pagination', 
+)
+
+MIDDLEWARE_CLASSES += (
+    'pagination.middleware.PaginationMiddleware',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.core.context_processors.tz',
+    'django.contrib.messages.context_processors.messages', 
+    'django.core.context_processors.request',
+    'djsec.context_processors.consts', 
+)
+
 # 静态文件目录 
 # 线上环境配置 Webserver 静态文件目录
 STATICFILES_DIRS = (
@@ -60,7 +89,7 @@ STATICFILES_DIRS = (
 
 # 模板文件目录
 TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, 'templates'),
+    os.path.join(BASE_DIR, 'templates', THEME),
 )
 
 ADMINS = (
