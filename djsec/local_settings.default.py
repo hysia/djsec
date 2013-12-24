@@ -4,7 +4,7 @@
   Author:  Hysia --<hysia@huorui.net>
   Purpose: 
   Created: 12/21/13
-  
+
 Django local settings for djsec project.
 
 For more information about djsec project, see
@@ -20,6 +20,8 @@ from settings import MIDDLEWARE_CLASSES
 DEBUG = True
 
 TEMPLATE_DEBUG = DEBUG
+
+SERVER_URL = 'http://localhost:8000/'
 
 # 线上域名 (DEBUG=False)
 ALLOWED_HOSTS = []
@@ -50,6 +52,9 @@ FIRST_DAY_OF_WEEK = 1
 # 时间格式化
 DATETIME_FORMAT = 'Y/m/d H:i:s'
 
+# 表前缀
+TABLE_PREFIX = 'djsec'
+
 # 数据库配置
 DATABASES = {
     'default': {
@@ -63,6 +68,7 @@ DATABASES = {
 
 INSTALLED_APPS += (
     'pagination', 
+    'app_xss_platform',
 )
 
 MIDDLEWARE_CLASSES += (
