@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}DjSec User Settings{% endblock %}
+
+{% block body %}
+{% include 'nav.html' %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <ul class="nav nav-pills nav-stacked settings-menu">
+                <li class="active"><a data-target-id="home"><i class="fa fa-home fa-fw"></i>Home</a></li>
+                <li><a data-target-id="widgets"><i class="fa fa-list-alt fa-fw"></i>Widgets</a></li>
+                <li><a data-target-id="pages"><i class="fa fa-file-o fa-fw"></i>Pages</a></li>
+                <li><a data-target-id="charts"><i class="fa fa-bar-chart-o fa-fw"></i>Charts</a></li>
+                <li><a data-target-id="table"><i class="fa fa-table fa-fw"></i>Table</a></li>
+                <li><a data-target-id="forms"><i class="fa fa-tasks fa-fw"></i>Forms</a></li>
+                <li><a data-target-id="calender"><i class="fa fa-calendar fa-fw"></i>Calender</a></li>
+                <li><a data-target-id="library"><i class="fa fa-book fa-fw"></i>Library</a></li>
+                <li><a data-target-id="applications"><i class="fa fa-pencil fa-fw"></i>Applications</a></li>
+                <li><a data-target-id="settings"><i class="fa fa-cogs fa-fw"></i>Settings</a></li>
+            </ul>
+        </div>
+        <div class="col-md-9 well settings-content" id="home">
+            Home
+        </div>
+        <div class="col-md-9 well settings-content" id="widgets">
+            Widgets
+        </div>
+        <div class="col-md-9 well settings-content" id="pages">
+            Pages
+        </div>
+        <div class="col-md-9 well settings-content" id="charts">
+            Charts
+        </div>
+        <div class="col-md-9 well settings-content" id="table">
+            Table
+        </div>
+        <div class="col-md-9 well settings-content" id="forms">
+            Forms
+        </div>
+        <div class="col-md-9 well settings-content" id="calender">
+            Calender
+        </div>
+        <div class="col-md-9 well settings-content" id="library">
+            Library
+        </div>
+        <div class="col-md-9 well settings-content" id="applications">
+            Applications
+        </div>
+        <div class="col-md-9 well settings-content" id="settings">
+            Settings
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(document).ready(function(){
+    var navItems = $('.settings-menu li > a');
+    var navListItems = $('.settings-menu li');
+    var allWells = $('.settings-content');
+    var allWellsExceptFirst = $('.settings-content:not(:first)');
+    
+    allWellsExceptFirst.hide();
+    navItems.click(function(e)
+    {
+        e.preventDefault();
+        navListItems.removeClass('active');
+        $(this).closest('li').addClass('active');
+        
+        allWells.hide();
+        var target = $(this).attr('data-target-id');
+        $('#' + target).show();
+    });
+});
+</script>
+{% endblock %}

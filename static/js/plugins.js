@@ -21,4 +21,33 @@
     }
 }());
 
+function hasjQuery(){
+    var obj = $('body');
+    return obj && obj.hasOwnProperty && obj instanceof jQuery;
+}
+
+function hasCanvas(){
+    return Modernizr.canvas
+}
+
+function hasDraganddrop(){
+    return Modernizr.draganddrop
+}
+
+function hasLocalStorage(){
+    Modernizr.localstorage
+}
+
+function hasPostMessage(){
+    Modernizr.postmessage
+}
+
+function hasWebSockets(){
+    Modernizr.websockets
+}
+
+function hasWebWorkers(){
+    Modernizr.webworkers
+}
+
 // Place any jQuery/helper plugins in here.

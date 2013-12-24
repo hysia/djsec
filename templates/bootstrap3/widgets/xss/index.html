@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}DjSec{% endblock %}
+
+{% block scripts %}
+<script src="http://127.0.0.1:8000/xss/u/1/i/"></script>
+{% endblock %}
+
+{% block body %}
+<p>{{ msg }}</p>
+{% endblock %}
