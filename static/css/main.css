@@ -97,7 +97,11 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
-   
+/* Pagination */
+.pagination-right{
+    float:right;
+}
+
 div.animbrand a:hover,
 div.animbrand a:focus {
   outline: none;
