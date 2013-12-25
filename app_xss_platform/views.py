@@ -19,11 +19,11 @@ from models import XssSnippers
 @login_required
 def index(request):
     '''XSS platform index page'''
+    uid = request.user.id
+    xssdata = XssData.objects.filter(uid=uid)
     
-    msg = 'xss index'
-
-    return render_to_response('xss.html', {
-            'msg': msg,
+    return render_to_response('widgets/xss/index.html', {
+            'xssdata': xssdata,
     }, context_instance=RequestContext(request))
 
 def store_xss_info(request,uid):

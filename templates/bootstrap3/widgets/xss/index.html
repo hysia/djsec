@@ -1,11 +1,105 @@
 {% extends "base.html" %}
 
-{% block title %}DjSec{% endblock %}
+{% block title %}DjSec XSS Platform{% endblock %}
 
 {% block scripts %}
-<script src="http://127.0.0.1:8000/xss/u/1/i/"></script>
+<!--  <script src="http://127.0.0.1:8000/xss/u/1/i/"></script>  -->
 {% endblock %}
 
 {% block body %}
-<p>{{ msg }}</p>
+{% include 'nav.html' %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3 col-md-3">
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><i class="fa fa-users"></i> Victims</a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <span class="glyphicon glyphicon-comment text-success"></span> <a href="#">Online</a>
+                                        <span class="badge">{{ xssdata.count }}</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><span class="glyphicon glyphicon-briefcase">
+                            </span> Modules</a>
+                        </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <a href="#">Module 1</a> <span class="label label-success">9</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">Module 2</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">Module 3</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                               
+            </div>
+        </div>
+        <div class="col-sm-9 col-md-9">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>IP</th>
+                        <th>Location</th>
+                        <th>Cookies</th>
+                        <th>Created Time</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if xssdata %}
+                        {% for victim in xssdata %}
+                        <tr>
+                            <td>{{ victim.id }}</td>
+                            <td>{{ victim.ip }}</td>
+                            <td>{{ victim.location }}</td>
+                            <td>{{ victim.cookies }}</td>
+                            <td>{{ victim.created_time }}</td>
+                            <td>
+                                <a href="#"><span class="glyphicon glyphicon-pencil"></i></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                    <tr><td colspan="5">There is no victim online :(</td></tr>
+                    {% endif %}
+                </tbody>              
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% include 'footer.html' %}
+
 {% endblock %}

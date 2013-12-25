@@ -97,10 +97,63 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+   
+div.animbrand a:hover,
+div.animbrand a:focus {
+  outline: none;
+}
 
+.animbrand a::before,
+.animbrand a::after {
+  display: inline-block;
+  opacity: 0;
+  -webkit-transition: -webkit-transform 0.3s, opacity 0.2s;
+  -moz-transition: -moz-transform 0.3s, opacity 0.2s;
+  transition: transform 0.3s, opacity 0.2s;
+}
 
+.animbrand a::before {
+  margin-right: 3px;
+  content: '<';
+  color:#428bca;
+  font-size: 22px;
+  line-height: 16px;
+  -webkit-transform: translateX(50px);
+  -moz-transform: translateX(50px);
+  transform: translateX(50px);
+}
 
+.animbrand a::after {
+  margin-left: 3px;
+  content: '>';
+  color:#428bca;
+  font-size: 22px;
+  line-height: 16px;
+  -webkit-transform: translateX(-50px);
+  -moz-transform: translateX(-50px);
+  transform: translateX(-50px);
+}
 
+.animbrand a:hover::before,
+.animbrand a:hover::after,
+.animbrand a:focus::before,
+.animbrand a:focus::after {
+  opacity: 1;
+  -webkit-transform: translateX(0px);
+  -moz-transform: translateX(0px);
+  transform: translateX(0px);
+}
+
+/*
+  Footer 
+*/
+
+.bs-footer {
+  height: 90px;
+  color: #777;
+  text-align: center;
+  margin-top: 40px;
+}
 
 
 
