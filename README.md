@@ -1,4 +1,5 @@
 djsec
 =====
 
-django security tools platform
+Web security tools base on django
+
