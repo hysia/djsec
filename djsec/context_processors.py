@@ -10,6 +10,6 @@ from django.conf import settings
 
 def consts(request):
         ret = {}
-        for i in ('THEME', 'EMAIL'):
+        for i in ('SERVER_URL','THEME', 'EMAIL'):
                 ret[i] = getattr(settings, i)
         return ret
