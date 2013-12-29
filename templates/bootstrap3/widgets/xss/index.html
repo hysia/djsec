@@ -3,10 +3,6 @@
 
 {% block title %}DjSec XSS Platform{% endblock %}
 
-{% block scripts %}
-<!--  <script src="http://127.0.0.1:8000/xss/u/1/i/"></script>  -->
-{% endblock %}
-
 {% block body %}
 {% include 'nav.html' %}
 
@@ -74,7 +70,7 @@
                         <th>IP</th>
                         <th>Location</th>
                         <th>Cookies</th>
-                        <th>Created Time</th>
+                        <th>DateTime</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -88,8 +84,16 @@
                             <td>{{ victim.cookies }}</td>
                             <td>{{ victim.created_time|date:"DATETIME_FORMAT" }}</td>
                             <td>
-                                <a href="#"><span class="glyphicon glyphicon-list-alt"></i></a>
-                                <a href="#"><span class="glyphicon glyphicon-screenshot"></i></a>
+								<div class="btn-group">
+									<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+									  Action <span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu" role="menu"> 
+										<li><a data-toggle="modal" href="/xss/show/{{ victim.id }}"  data-backdrop="static" data-target="#ViewDetailModal"><span class="glyphicon glyphicon-list-alt"></span>  View details</a></li>
+										<li><a data-toggle="modal" href="/xss/command/{{ victim.id }}" data-backdrop="static" data-target="#CommandModal"><span class="glyphicon glyphicon-screenshot"></span>  Command</a></li>
+										<li><a data-toggle="modal" href="/xss/remove/{{ victim.id }}" data-backdrop="static" data-target="#RemoveModal"><span class="glyphicon glyphicon-remove"></span> Remove</a></li>
+									</ul>
+								</div>
                             </td>
                         </tr>
                         {% endfor %}
@@ -103,7 +107,44 @@
     </div>
 </div>
 
+<div class="modal fade" id="ViewDetailModal" tabindex="-1" role="dialog" aria-labelledby="ViewDetailModal" aria-hidden="true">
+</div>
+
+<div class="modal fade" id="CommandModal" tabindex="-1" role="dialog" aria-labelledby="CommandModal" aria-hidden="true">
+</div>
+
+<div class="modal fade" id="RemoveModal" tabindex="-1" role="dialog" aria-labelledby="RemoveModal" aria-hidden="true">
+</div>
 
 {% include 'footer.html' %}
 
 {% endblock %}
+
+{% block scripts %}
+<script>
+$(document).ready(function(){
+	$('body').on('hidden.bs.modal', '.modal', function () {
+		$(this).removeData('bs.modal');
+	});
+});
+
+function RemoveVictim(vid){
+	$.ajax({
+		type:"get",
+		cache: false,
+		async: false,
+		url:"/xss/remove/"+vid+"?action=remove",
+		success:function(result){
+			if (result.code == 200){
+			$('#RemoveModal').modal('hide');
+			location.reload();
+			}else{
+				alert(result.message);
+			}
+		}
+	})
+};
+
+</script>
+{% endblock %}
+

