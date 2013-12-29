@@ -38,6 +38,7 @@ class XssSnippers(models.Model):
 	share_with = models.CharField(max_length=300,null=False)
 	is_public = models.NullBooleanField(null=True, default=False)
 	codz = models.TextField(default='')
+	desc = models.CharField(max_length=300,null=False, blank=True)
 	
 	class Meta:
 		db_table = '%s_xss_snippers' %settings.TABLE_PREFIX

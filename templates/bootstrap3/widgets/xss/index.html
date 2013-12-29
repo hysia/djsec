@@ -33,7 +33,7 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><span class="glyphicon glyphicon-briefcase">
-                            </span> Modules</a>
+                            </span> Snippers</a>
                         </h4>
                     </div>
                     <div id="collapseTwo" class="panel-collapse collapse">
@@ -41,17 +41,12 @@
                             <table class="table">
                                 <tr>
                                     <td>
-                                        <a href="#">Module 1</a> <span class="label label-success">9</span>
+                                        <a href="#">My Snippers </a> <span class="label label-success">9</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a href="#">Module 2</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="#">Module 3</a>
+                                        <a href="#">Public Snippers</a> <span class="label label-success">999</span>
                                     </td>
                                 </tr>
                             </table>
@@ -64,7 +59,7 @@
         <div class="col-sm-9 col-md-9">
 			<div class="input-group">
 				<span class="input-group-addon">payload</span>
-				<input type="text" class="form-control" value="{{ SERVER_URL }}xss/u/{{request.user.id}}/i">
+				<input type="text" id="input-payload" class="form-control" value="{{ SERVER_URL }}xss/u/{{request.user.id}}/i">
 			</div>
             {% autopaginate xssdata 10 %}
             <table class="table table-hover table-striped">
@@ -102,7 +97,7 @@
                         </tr>
                         {% endfor %}
                     {% else %}
-                    <tr><td colspan="5">There is no victim online :(</td></tr>
+                    <tr><td colspan="6">There is no victim online :(</td></tr>
                     {% endif %}
                 </tbody>              
             </table>
@@ -129,6 +124,9 @@
 $(document).ready(function(){
 	$('body').on('hidden.bs.modal', '.modal', function () {
 		$(this).removeData('bs.modal');
+	});
+	$('#input-payload').click(function(){
+		$(this).select();
 	});
 });
 
