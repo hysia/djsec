@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load pagination_tags %}
 
-{% block title %}DjSec XSS Platform{% endblock %}
+{% block title %}DjSec XSS Platform - Snippers{% endblock %}
 
 {% block body %}
 {% include 'nav.html' %}
@@ -16,7 +16,7 @@
                             <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><i class="fa fa-users"></i> Victims</a>
                         </h4>
                     </div>
-                    <div id="collapseOne" class="panel-collapse collapse in">
+                    <div id="collapseOne" class="panel-collapse collapse">
                         <div class="panel-body">
                             <table class="table">
                                 <tr>
@@ -36,7 +36,7 @@
                             </span> Snippers</a>
                         </h4>
                     </div>
-                    <div id="collapseTwo" class="panel-collapse collapse">
+                    <div id="collapseTwo" class="panel-collapse collapse in">
                         <div class="panel-body">
                             <table class="table">
                                 <tr>
@@ -57,47 +57,52 @@
             </div>
         </div>
         <div class="col-sm-9 col-md-9">
-			<div class="input-group">
-				<span class="input-group-addon">payload</span>
-				<input type="text" id="input-payload" class="form-control" value="{{ SERVER_URL }}xss/u/{{request.user.id}}/i">
+			<div class="input-group pull-right">
+				<button data-toggle="modal" type="button" class="btn btn-success" data-backdrop="static" data-target="#AddSnipperlModal">Add Snipper</button>	
 			</div>
-            {% autopaginate xssdata 10 %}
+            {% autopaginate snippers 10 %}
             <table class="table table-hover table-striped">
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>IP</th>
-                        <th>Location</th>
-                        <th>Cookies</th>
-                        <th>DateTime</th>
-                        <th>Action</th>
+                        <th>Description</th>
+                        <th>Codz</th>
+                        <th>Public</th>
+                        <th>Shared</th>
+					   <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% if xssdata %}
-                        {% for victim in xssdata %}
+                    {% if snippers %}
+                        {% for snipper in snippers %}
                         <tr>
-                            <td>{{ victim.id }}</td>
-                            <td>{{ victim.ip }}</td>
-                            <td>{{ victim.location }}</td>
-                            <td>{{ victim.cookies }}</td>
-                            <td>{{ victim.created_time|date:"DATETIME_FORMAT" }}</td>
+                            <td>{{ snipper.id }}</td>
+                            <td>{{ snipper.desc }}</td>
+                            <td>{{ snipper.codz }}</td>
+                            <td>
+							{% if snipper.is_public %}
+							<span class="label label-success">Yes</span>
+							{% else %}
+							<span class="label label-default">No</span>
+							{% endif %}
+						   </td>
+                            <td>{{ snipper.shared }}</td>
                             <td>
 								<div class="btn-group">
 									<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
 									  Action <span class="caret"></span>
 									</button>
-									<ul class="dropdown-menu" role="menu"> 
-										<li><a data-toggle="modal" href="/xss/show/{{ victim.id }}"  data-backdrop="static" data-target="#ViewDetailModal"><span class="glyphicon glyphicon-list-alt"></span>  View details</a></li>
-										<li><a data-toggle="modal" href="/xss/command/{{ victim.id }}" data-backdrop="static" data-target="#CommandModal"><span class="glyphicon glyphicon-screenshot"></span>  Command</a></li>
-										<li><a data-toggle="modal" href="/xss/remove/{{ victim.id }}" data-backdrop="static" data-target="#RemoveModal"><span class="glyphicon glyphicon-remove"></span> Remove</a></li>
+									<ul class="dropdown-menu" role="menu">
+										<li><a data-toggle="modal" href="/xss/snippers/show/{{ snipper.id }}"  data-backdrop="static" data-target="#ViewSnipperModal"><span class="glyphicon glyphicon-list-alt"></span>  View details</a></li>
+										<li><a data-toggle="modal" href="/xss/snippers/payload/{{ snipper.id }}"  data-backdrop="static" data-target="#AddPayloadModal"><span class="glyphicon glyphicon-list-alt"></span>  Add to my payload</a></li>
+										<li><a data-toggle="modal" href="/xss/snippers/remove/{{ snipper.id }}" data-backdrop="static" data-target="#RemoveSnipperModal"><span class="glyphicon glyphicon-remove"></span> Remove</a></li>
 									</ul>
 								</div>
                             </td>
                         </tr>
                         {% endfor %}
                     {% else %}
-                    <tr><td colspan="6">There is no victim online :(</td></tr>
+                    <tr><td colspan="6">There is no snippers :(</td></tr>
                     {% endif %}
                 </tbody>              
             </table>
@@ -106,13 +111,42 @@
     </div>
 </div>
 
-<div class="modal fade" id="ViewDetailModal" tabindex="-1" role="dialog" aria-labelledby="ViewDetailModal" aria-hidden="true">
+<div class="modal fade" id="AddSnipperlModal" tabindex="-1" role="dialog" aria-labelledby="AddSnipperlModal" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">New snipper</h4>
+			</div>
+			<form action="/xss/snippers/add/" method="post" class="form">
+			<div class="modal-body">
+				<div class="form-group">
+					<input type="text" class="form-control" name="desc" placeholder="Description" required/>
+				</div>
+				<div class="form-group">
+					<textarea class="form-control" rows="6" name="codz" placeholder="Codz" required></textarea>
+				</div>
+				<div class="checkbox">
+					<input type="checkbox" name="ispublic" {% if snipper.is_public %}checked{% endif %}> public
+				</div>
+				{% csrf_token %}
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-success">Add</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+			</form>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
 </div>
 
-<div class="modal fade" id="CommandModal" tabindex="-1" role="dialog" aria-labelledby="CommandModal" aria-hidden="true">
+<div class="modal fade" id="ViewSnipperModal" tabindex="-1" role="dialog" aria-labelledby="ViewSnipperModal" aria-hidden="true">
 </div>
 
-<div class="modal fade" id="RemoveModal" tabindex="-1" role="dialog" aria-labelledby="RemoveModal" aria-hidden="true">
+<div class="modal fade" id="AddPayloadModal" tabindex="-1" role="dialog" aria-labelledby="AddPayloadModal" aria-hidden="true">
+</div>
+
+<div class="modal fade" id="RemoveSnipperModal" tabindex="-1" role="dialog" aria-labelledby="RemoveSnipperModal" aria-hidden="true">
 </div>
 
 {% include 'footer.html' %}
@@ -130,15 +164,15 @@ $(document).ready(function(){
 	});
 });
 
-function RemoveVictim(vid){
+function RemoveSnipper(sid){
 	$.ajax({
 		type:"get",
 		cache: false,
 		async: false,
-		url:"/xss/remove/"+vid+"?action=remove",
+		url:"/xss/snippers/remove/"+sid+"?action=remove",
 		success:function(result){
 			if (result.code == 200){
-			$('#RemoveModal').modal('hide');
+			$('#RemoveSnipperModal').modal('hide');
 			location.reload();
 			}else{
 				alert(result.message);

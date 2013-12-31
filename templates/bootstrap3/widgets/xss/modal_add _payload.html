@@ -1,0 +1,15 @@
+<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<h4 class="modal-title">Add snipper to paylpad</h4>
+		</div>
+		<div class="modal-body">
+			<p>Are you sure to add snipper ( {{ snipper.desc }} ) to xss payload?</p>
+		</div>
+		<div class="modal-footer">
+			<a href="javascript:addPayload('{{ snipper.id }}')" class="btn btn-success">Add</a>
+			<button type="button" class="btn btn-default" data-dismiss="modal">Cancle</button>
+		</div>
+	</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->

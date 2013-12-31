@@ -10,8 +10,10 @@ from ast import literal_eval
 from django.http import Http404, HttpResponse
 from django.conf import settings
 from django.template import RequestContext
+from django.shortcuts import redirect
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 from models import XssData
 from models import XssSnippers
@@ -20,7 +22,10 @@ from models import XssSnippers
 def index(request):
     '''XSS platform index page'''
     uid = request.user.id
-    xssdata = XssData.objects.filter(uid=uid)
+    try:
+        xssdata = XssData.objects.filter(uid=uid)
+    except:
+        xssdata = []
     
     return render_to_response('widgets/xss/index.html', {
             'xssdata': xssdata,
@@ -61,6 +66,93 @@ def remove_victim(request,vid):
         
     return render_to_response('widgets/xss/modal_remove.html', {
             'victim': victim,
+    }, context_instance=RequestContext(request))
+
+def my_snippers(request):
+    uid = request.user.id
+    try:
+        snippers = XssSnippers.objects.filter(uid=uid)
+    except:
+        snippers = []
+        
+    return render_to_response('widgets/xss/snippers.html', {
+            'snippers': snippers,
+    }, context_instance=RequestContext(request))
+
+def show_public_snippers(request):
+    uid = request.user.id
+    #TODO
+    #'share_with' should be a list
+    share_with = uid
+    try:
+        snippers = XssSnippers.objects.filter(Q(share_with=share_with) | Q(is_public=True))
+    except:
+        snippers = []
+        
+    return render_to_response('widgets/xss/snippers.html', {
+            'snippers': snippers,
+    }, context_instance=RequestContext(request))
+
+def add_snipper(request):
+    uid = request.user.id
+    sid = request.POST.get('sid','')
+    desc = request.POST.get('desc','')
+    codz = request.POST.get('codz','')
+    is_public = request.POST.get('ispublic', False)
+    is_public = True if is_public =='on' else False
+    
+    if sid:
+        try:
+            snipper = XssSnippers.objects.get(id=sid)
+            snipper.uid = uid
+            snipper.is_public = is_public
+            snipper.codz = codz
+            snipper.desc = desc
+            snipper.save()
+        except:
+            pass
+    else:       
+        snipper = XssSnippers(uid=uid,is_public=is_public,codz=codz,desc=desc)
+        snipper.save()
+        
+    return redirect('/xss/snippers')
+
+def show_snipper(request,sid):
+    try:
+        snipper = XssSnippers.objects.get(id=sid)
+    except:
+        snipper = None
+        
+    return render_to_response('widgets/xss/modal_view_snipper.html', {
+            'snipper': snipper,
+    }, context_instance=RequestContext(request))  
+
+
+def add_snipper_to_payload(request,sid):
+    try:
+        snipper = XssSnippers.objects.get(id=sid)
+    except:
+        snipper = None
+        
+    return render_to_response('widgets/xss/modal_add _payload.html', {
+            'snipper': snipper,
+    }, context_instance=RequestContext(request))
+        
+def remove_snipper(request,sid):
+
+    try:
+        snipper = XssSnippers.objects.get(id=sid)
+    except:
+        snipper = None
+        
+    action = request.GET.get('action',None)
+    if snipper and action == 'remove':
+        snipper.delete()
+        ret = {'code':200,'message':'success'}
+        return HttpResponse(json.dumps(ret), mimetype="application/json")
+        
+    return render_to_response('widgets/xss/modal_remove _snipper.html', {
+            'snipper': snipper,
     }, context_instance=RequestContext(request))
 
 def store_xss_info(request,uid):
