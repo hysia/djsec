@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     # Installed Apps
     #url(r'^blog/', include('blog.urls')),
     url(r'^xss/', include('app_xss_platform.urls')),
+    url(r'^tools/', include('app_tools.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
 )

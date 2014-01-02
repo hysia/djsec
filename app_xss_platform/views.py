@@ -19,7 +19,7 @@ from models import XssData
 from models import XssSnippers
 
 @login_required
-def index(request):
+def xss_index(request):
     '''XSS platform index page'''
     uid = request.user.id
     try:

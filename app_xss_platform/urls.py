@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('app_xss_platform.views',
-    url(r'^$', 'index', name='xss-index'),
+    url(r'^$', 'xss_index', name='xss-index'),
     url(r'^show/(?P<vid>\d+)$', 'show_victim', name='show-victim'),
     url(r'^command/(?P<vid>\d+)$', 'command_victim', name='command-victim'),
     url(r'^remove/(?P<vid>\d+)$', 'remove_victim', name='remove-victim'),

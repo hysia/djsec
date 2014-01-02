@@ -4,4 +4,66 @@
 
 {% block body %}
 {% include 'nav.html' %}
+
+<div class="container">
+	<div class="row">
+		<div class="col-sm-3">
+    	    <div class="hero-widget well well-sm">
+                <div class="icon">
+                     <i class="glyphicon glyphicon-user"></i>
+                </div>
+                <div class="text">
+                    <var>3</var>
+                    <label class="text-muted">invited users</label>
+                </div>
+                <div class="options">
+                    <a href="javascript:;" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-plus"></i> Invite new!</a>
+                </div>
+            </div>
+		</div>
+        <div class="col-sm-3">
+            <div class="hero-widget well well-sm">
+                <div class="icon">
+                     <i class="glyphicon glyphicon-th-list"></i>
+                </div>
+                <div class="text">
+                    <var>614</var>
+                    <label class="text-muted">XSS Platform</label>
+                </div>
+                <div class="options">
+                    <a href="javascript:;" class="btn btn-default btn-lg"><i class="glyphicon glyphicon-hand-up"></i> Check it out!</a>
+                </div>
+            </div>
+		</div>
+        <div class="col-sm-3">
+            <div class="hero-widget well well-sm">
+                <div class="icon">
+                     <i class="glyphicon glyphicon-stats"></i>
+                </div>
+                <div class="text">
+                    <var>73</var>
+                    <label class="text-muted">SQLi Platform</label>
+                </div>
+                <div class="options">
+                    <a href="javascript:;" class="btn btn-default btn-lg"><i class="glyphicon glyphicon-hand-up"></i> Check it out!</a>
+                </div>
+            </div>
+    	</div>
+        <div class="col-sm-3">
+            <div class="hero-widget well well-sm">
+                <div class="icon">
+                     <i class="glyphicon glyphicon-th"></i>
+                </div>
+                <div class="text">
+                    <var>75</var>
+                    <label class="text-muted">WAD Platform</label>
+                </div>
+                <div class="options">
+                    <a href="javascript:;" class="btn btn-default btn-lg"><i class="glyphicon glyphicon-hand-up"></i> Check it out!</a>
+                </div>
+            </div>
+		</div>
+	</div>
+</div>
+
 {% endblock %}

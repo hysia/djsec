@@ -18,12 +18,7 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     '''首页'''
     
-    msg = 'test msg'
-
-    return render_to_response('index.html', {
-            'index': True,
-            'msg': msg,
-    }, context_instance=RequestContext(request))
+    return redirect('/dashboard')
 
 @login_required
 def show_dashboard(request):
@@ -31,7 +26,7 @@ def show_dashboard(request):
     
     msg = 'dashboard'
 
-    return render_to_response('index.html', {
+    return render_to_response('dashboard.html', {
             'msg': msg,
     }, context_instance=RequestContext(request))
 
